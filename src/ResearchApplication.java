@@ -1,7 +1,6 @@
-import enums.DocumentTypes;
-import enums.TranscriptStatus;
-
+import enums.*;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class ResearchApplication extends Application{
     private ArrayList<Publication> publications;
@@ -24,13 +23,9 @@ public class ResearchApplication extends Application{
 
     // methods
     public void addPublication(Publication publication){
-        publications.add(publication);
-    }
-
-    @Override
-    public boolean verifyDocuments() {
-        return hasDocument(DocumentTypes.ENR) &&
-                (hasDocument(DocumentTypes.GRP) || !publications.isEmpty());
+        if(publication != null) {
+            publications.add(publication);
+        }
     }
 
 
@@ -45,8 +40,25 @@ public class ResearchApplication extends Application{
         return sum / publications.size();
 
     }
+
     @Override
     public void evaluate(){
         // ege
+    }
+
+    @Override
+    public ScholarshipName getScholarshipName() {
+        return ScholarshipName.RESEARCH;
+    }
+
+    @Override
+    public String toString(){
+        return ("Applicant ID: " + getApplicantID() +
+                "\nName: " + getName() +
+                "\nGPA: " + getGPA() +
+                "\nTranscript Status: " + getTranscriptStatus() +
+                "\nDocument List: " + getDocumentArrayList().toString() +
+                "\nPublications: " + getPublications().toString());
+
     }
 }

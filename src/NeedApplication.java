@@ -1,4 +1,4 @@
-import enums.TranscriptStatus;
+import enums.*;
 
 public class NeedApplication extends Application{
     private double familyIncome;
@@ -7,6 +7,7 @@ public class NeedApplication extends Application{
     public NeedApplication(){
         super();
     }
+
     public NeedApplication(String applicantID, String name, double GPA,
                            TranscriptStatus transcriptStatus, double familyIncome, int dependents){
         super(applicantID, name, GPA, transcriptStatus);
@@ -28,10 +29,21 @@ public class NeedApplication extends Application{
         // ege
     }
 
+    @Override
+    public ScholarshipName getScholarshipName() {
+        return ScholarshipName.NEED;
+    }
+
+
+    @Override
     public String toString(){
-        return ("Applicant ID: " + this.getApplicantID() + "\nName: " + this.getName() + "\nGPA: " +
-                this.getGPA() + "\nTranscript Status: " + this.getTranscriptStatus() + "Document List: " + this.getDocumentArrayList() +
-                "Family Income: " + familyIncome + "Dependents: " + dependents);
+        return ("Applicant ID: " + getApplicantID() +
+                "\nName: " + getName() +
+                "\nGPA: " + getGPA() +
+                "\nTranscript Status: " + getTranscriptStatus() +
+                "\nDocument List: " + getDocumentArrayList().toString() +
+                "\nFamily Income: " + getFamilyIncome() +
+                "\nDependents: " + getDependents());
 
     }
 }

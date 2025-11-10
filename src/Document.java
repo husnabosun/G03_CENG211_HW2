@@ -18,7 +18,8 @@ public class Document{
     public int getDurationInMonths(){
         return durationInMonths;
     }
+    @Override
     public String toString(){
-        return ("Type of document: " + documentType + "\nDuration in months: " + durationInMonths);
+        return ("Type of document: " + getDocumentType() + "\nDuration in months: " + getDurationInMonths());
     }
 }

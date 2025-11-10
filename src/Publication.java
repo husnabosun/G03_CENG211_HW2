@@ -3,7 +3,7 @@ public class Publication {
     private double impactFactor;
 
     public Publication(){
-        System.out.println("An empty Publication object is created");
+
     }
     public Publication(String title, double impactFactor){
         this.title = title;
@@ -16,7 +16,7 @@ public class Publication {
         return impactFactor;
     }
     public String toString(){
-        return "Publication => Title: " + title + " Impact Factor: " + impactFactor;
+        return "Publication => Title: " + getTitle() + " Impact Factor: " + getImpactFactor();
     }
 
 }
