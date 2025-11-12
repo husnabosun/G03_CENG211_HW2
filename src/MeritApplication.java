@@ -13,7 +13,7 @@ public class MeritApplication extends Application {
 
     @Override
     public void evaluate(){
-        if (hasGeneralReq()) {
+        if (!hasGeneralReq()) {
             return;
         }
         

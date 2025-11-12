@@ -43,7 +43,7 @@ public class ResearchApplication extends Application{
 
     @Override
     public void evaluate(){
-        if (hasGeneralReq()) {
+        if (!hasGeneralReq()) {
             return;
         }
     

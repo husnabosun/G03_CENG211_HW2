@@ -29,7 +29,7 @@ public class NeedApplication extends Application{
     // methods
     @Override
     public void evaluate(){
-        if (hasGeneralReq()) {
+        if (!hasGeneralReq()) {
             return;
         } 
 
