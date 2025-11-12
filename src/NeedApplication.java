@@ -26,7 +26,37 @@ public class NeedApplication extends Application{
     // methods
     @Override
     public void evaluate(){
-        // ege
+        if (hasGeneralReq()) {
+            return;
+        }
+        
+        int[] thresholds = {10000,15000}; 
+
+        if (this.hasDocument(DocumentTypes.SAV)){
+            adjustThresholds(thresholds, 6/5);
+        }
+
+        if (getDependents() >= 3){
+            adjustThresholds(thresholds, 11/10);
+        }
+
+        if (getFamilyIncome() > thresholds[1]){
+            setRejectionReason(RejectionReason.FINANCIAL_STATUS_UNSTABLE);
+            setScholarshipStatus(ScholarshipStatus.REJECTED);
+            return;
+        }
+
+        setScholarshipStatus(ScholarshipStatus.ACCEPTED);
+        
+        if (thresholds[0] < getFamilyIncome() && getFamilyIncome() <= thresholds[1]) setScholarshipType(ScholarshipType.HALF);
+        else setScholarshipType(ScholarshipType.FULL);
+
+        setScholarshipDuration("1 year");
+    }   
+
+    private void adjustThresholds(int[] thresholds, float adjustingFactor){
+        thresholds[0] *= adjustingFactor;
+        thresholds[1] *= adjustingFactor;
     }
 
     @Override
