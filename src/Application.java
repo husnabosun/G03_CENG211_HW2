@@ -116,12 +116,12 @@ public abstract class Application {
     }
 
     public boolean hasGeneralReq(){
-        if(!this.hasDocument(DocumentTypes.ENR)){
+        if(!hasDocument(DocumentTypes.ENR)){
             setScholarshipStatus(ScholarshipStatus.REJECTED);
             setRejectionReason(RejectionReason.MISSING_ENROLLMENT_CERTIFICATE);
             return false;
         }
-        else if( transcriptStatus != TranscriptStatus.Y){
+        else if(transcriptStatus != TranscriptStatus.Y){
             setScholarshipStatus(ScholarshipStatus.REJECTED);
             setRejectionReason(RejectionReason.MISSING_TRANSCRIPT);
             return false;

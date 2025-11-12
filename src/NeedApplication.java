@@ -3,6 +3,9 @@ import enums.*;
 public class NeedApplication extends Application{
     private double familyIncome;
     private int dependents;
+    private final int[] thresholds = {10000,15000}; 
+    private final double twentyPercentAdjustment = 1.2;
+    private final double tenPercentAdjustment = 1.1;
 
     public NeedApplication(){
         super();
@@ -26,7 +29,35 @@ public class NeedApplication extends Application{
     // methods
     @Override
     public void evaluate(){
-        // ege
+        if (!hasGeneralReq()) {
+            return;
+        } 
+
+        if (this.hasDocument(DocumentTypes.SAV)){
+            adjustThresholds(thresholds, twentyPercentAdjustment);
+        }
+
+        if (getDependents() >= 3){
+            adjustThresholds(thresholds, tenPercentAdjustment);
+        }
+
+        if (getFamilyIncome() > thresholds[1]){
+            setRejectionReason(RejectionReason.FINANCIAL_STATUS_UNSTABLE);
+            setScholarshipStatus(ScholarshipStatus.REJECTED);
+            return;
+        }
+
+        setScholarshipStatus(ScholarshipStatus.ACCEPTED);
+        
+        if (thresholds[0] < getFamilyIncome() && getFamilyIncome() <= thresholds[1]) setScholarshipType(ScholarshipType.HALF);
+        else setScholarshipType(ScholarshipType.FULL);
+
+        setScholarshipDuration("1 year");
+    }   
+
+    private void adjustThresholds(int[] thresholds, double adjustingFactor){
+        thresholds[0] *= adjustingFactor;
+        thresholds[1] *= adjustingFactor;
     }
 
     @Override

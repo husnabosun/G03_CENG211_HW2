@@ -43,7 +43,50 @@ public class ResearchApplication extends Application{
 
     @Override
     public void evaluate(){
-        // ege
+        if (!hasGeneralReq()) {
+            return;
+        }
+    
+        boolean grpCheck = this.hasDocument(DocumentTypes.GRP);
+            
+        if (!grpCheck){
+            if (publications.isEmpty()){
+                setScholarshipStatus(ScholarshipStatus.REJECTED);
+                setRejectionReason(RejectionReason.MISSING_PUBLICATION_OR_PROPOSAL);
+                return;
+            }
+        }
+        
+        double averageImpactFactor = calculateAverageImpactFactor();
+
+        if (averageImpactFactor < 1){
+            setScholarshipStatus(ScholarshipStatus.REJECTED);
+            setRejectionReason(RejectionReason.PUBLICATION_IMPACT_TOO_LOW);
+            return;
+        }
+
+        setScholarshipStatus(ScholarshipStatus.ACCEPTED);
+
+        if (1 <= averageImpactFactor && averageImpactFactor < 1.5){
+            setScholarshipType(ScholarshipType.HALF);
+            setScholarshipDuration(rsvCheck("6 months"));
+        }  
+        else{
+            setScholarshipType(ScholarshipType.FULL);
+            setScholarshipDuration(rsvCheck("1 year"));
+        }
+    }
+
+    private String rsvCheck(String duration){
+        if (hasDocument(DocumentTypes.RSV)){
+            if (duration == "1 year"){
+                return "2 years";
+            }
+
+            return "1 years and 6 months";
+        }
+        
+        return duration;
     }
 
     @Override
