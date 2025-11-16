@@ -33,15 +33,21 @@ public class NeedApplication extends Application{
             return;
         } 
 
+        int[] tempThresholds = new int[2];
+        int i;
+        for (i = 0; i < 2; i++){
+            tempThresholds[i] = thresholds[i]; 
+        } 
+
         if (this.hasDocument(DocumentTypes.SAV)){
-            adjustThresholds(thresholds, twentyPercentAdjustment);
+            adjustThresholds(tempThresholds, twentyPercentAdjustment);
         }
 
         if (getDependents() >= 3){
-            adjustThresholds(thresholds, tenPercentAdjustment);
+            adjustThresholds(tempThresholds, tenPercentAdjustment);
         }
 
-        if (getFamilyIncome() > thresholds[1]){
+        if (getFamilyIncome() > tempThresholds[1]){
             setRejectionReason(RejectionReason.FINANCIAL_STATUS_UNSTABLE);
             setScholarshipStatus(ScholarshipStatus.REJECTED);
             return;
@@ -49,7 +55,7 @@ public class NeedApplication extends Application{
 
         setScholarshipStatus(ScholarshipStatus.ACCEPTED);
         
-        if (thresholds[0] < getFamilyIncome() && getFamilyIncome() <= thresholds[1]) setScholarshipType(ScholarshipType.HALF);
+        if (tempThresholds[0] < getFamilyIncome() && getFamilyIncome() <= tempThresholds[1]) setScholarshipType(ScholarshipType.HALF);
         else setScholarshipType(ScholarshipType.FULL);
 
         setScholarshipDuration("1 year");
